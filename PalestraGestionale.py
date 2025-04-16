@@ -237,11 +237,11 @@ def verifica_input(funzione):
 
 @verifica_input
 def registrazione(admin,codice,password):
-    codice = input("Codice fiscale: ")
+   
     nome = input("Nome: ")
     eta = int(input("Età: "))
     prezzo = float(input("Prezzo mensile: "))
-    password = input("Password: ")
+    
     corso = input("Corso (Yoga/Gym/Pilates): ")
     tipo = input("Tipo cliente (standard/plus): ").lower()
 
@@ -254,9 +254,7 @@ def registrazione(admin,codice,password):
 
 @verifica_input
 def login(admin,codice,password):
-    codice = input("Codice fiscale: ")
-    password = input("Password: ")
-
+  
     for cliente in admin.clienti:
         if cliente.get_codice_fiscale() == codice and cliente.get_password() == password:
             if admin.verifica_tessera(codice):
@@ -268,7 +266,7 @@ def login(admin,codice,password):
     print("Cliente non trovato. Procedo con registrazione.")
     registrazione(admin)
 
-
+# ... (resto del codice invariato sopra)
 
 def menu_admin(admin):
     while True:
@@ -283,16 +281,16 @@ def menu_admin(admin):
         scelta = input("Scegli un'opzione: ")
 
         match scelta:
-        
-                
             case "1":
-                admin.modifica_cliente()
+                registrazione(admin)
             case "2":
+                admin.modifica_cliente()
+            case "3":
                 cf = input("Inserisci il codice fiscale del cliente: ")
                 admin.verifica_tessera(cf)
-            case "3":
-                admin.stampa_clienti()
             case "4":
+                admin.stampa_clienti()
+            case "5":
                 admin.sconti_clienti()
             case "0":
                 print("Uscita dal menu Admin.")
@@ -301,70 +299,54 @@ def menu_admin(admin):
                 print("Scelta non valida.")
 
 
-def menu_cliente():
-    
-      while True:
+def menu_cliente(admin):
+    while True:
         print("\n--- Menu Utente ---")
         print("1. Aggiungi Registrazione")
         print("2. Login")
         print("3. Verifica Tessera Cliente")
-        print("5. Visualizza sconti del mese per i clienti")
+        print("4. Visualizza sconti del mese per i clienti")
         print("0. Esci")
 
         scelta = input("Scegli un'opzione: ")
 
         match scelta:
-        
-                
             case "1":
                 registrazione(admin)
             case "2":
                 login(admin)
-               
             case "3":
                 cf = input("Inserisci il codice fiscale del cliente: ")
                 admin.verifica_tessera(cf)
-        
+            case "4":
+                admin.sconti_clienti()
             case "0":
                 print("Uscita dal menu Utente.")
                 break
             case _:
                 print("Scelta non valida.")
-    
-    
-    
-
-
-
 
 
 def app():
-    
-   
+    admin = Admin()
     while True:
-        scelta=int(input("seleziona la tua opzione \n1.ADMIN\n2.UTENTE"))
-        
+        scelta = int(input("Seleziona la tua opzione \n1. ADMIN\n2. UTENTE\n0. Esci\n> "))
+
         match scelta:
-            
             case 1:
-                menu_admin()
-                
-            case 2: 
-                menu_cliente()
-            
-            case _:
-                
-                print("---USCITA DAL SISTEMA---")
-                
+                menu_admin(admin)
+            case 2:
+                menu_cliente(admin)
+            case 0:
+                print("--- USCITA DAL SISTEMA ---")
                 break
-            
+            case _:
+                print("Scelta non valida.")
 
-    
-    
-#main
 
-admin=Admin()
+# main
 app()
+
 
 
 
