@@ -1,4 +1,4 @@
-# 💪 Gestione Clienti Palestra
+# 💪 GymManager
 
 Un sistema di gestione per clienti di una palestra, scritto in Python con un approccio orientato agli oggetti. Il programma gestisce registrazione, login, tessere annuali, corsi, sconti stagionali e la distinzione tra clienti standard e clienti plus.
 
