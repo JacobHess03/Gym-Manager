@@ -42,23 +42,19 @@ class Cliente(ABC):
     def get_tessera(self): pass
     @abstractmethod
     def set_tessera(self, tessera): pass
-    @abstractmethod
-    def get_scadenza(self): pass
-    @abstractmethod
-    def set_scadenza(self, scadenza): pass
+    
 
 # ClienteStandard eredita da Cliente e implementa i metodi
 class ClienteStandard(Cliente):
     def __init__(self, codice_fiscale, nome, eta, prezzo_mensile, password, corso):
         super().__init__(codice_fiscale, nome, eta, prezzo_mensile, password, corso)
-        self.__scadenza = ""
+        
         self.__tessera = Tessera(nome, datetime.today().strftime("%d/%m/%Y"))
 
-    # Getter/setter per tessera e scadenza
+    # Getter/setter per tessera 
     def get_tessera(self): return self.__tessera
     def set_tessera(self, tessera): self.__tessera = tessera
-    def get_scadenza(self): return self.__scadenza
-    def set_scadenza(self, scadenza): self.__scadenza = scadenza
+
 
     # Implementazione metodi astratti della superclasse
     def get_codice_fiscale(self): return self._Cliente__codice_fiscale
