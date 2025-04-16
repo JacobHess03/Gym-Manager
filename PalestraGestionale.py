@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from datetime import datetime, timedelta
 
 class Cliente(ABC):
-    def __init__(self, codice_fiscale, nome, eta, prezzo_mensile, password, corso, tessera=None):
+    def __init__(self, codice_fiscale, nome, eta, prezzo_mensile, password, corso, tessera):
         self.__codice_fiscale = codice_fiscale
         self.__nome = nome
         self.__eta = eta
@@ -46,46 +46,66 @@ class Cliente(ABC):
     @abstractmethod
     def set_tessera(self, tessera): pass
 
-    @abstractmethod
-    def get_scadenza(self): pass
-    @abstractmethod
-    def set_scadenza(self, scadenza): pass
-
 
 class ClienteStandard(Cliente):
     def __init__(self, codice_fiscale, nome, eta, prezzo_mensile, password, corso):
         super().__init__(codice_fiscale, nome, eta, prezzo_mensile, password, corso)
-        self.__scadenza = ""
+        
         self.__tessera = Tessera(nome, datetime.today().strftime("%d/%m/%Y"))
 
     def get_tessera(self): return self.__tessera
     def set_tessera(self, tessera): self.__tessera = tessera
 
-    def get_scadenza(self): return self.__scadenza
-    def set_scadenza(self, scadenza): self.__scadenza = scadenza
+    def get_codice_fiscale(self): return self.__codice_fiscale
+    def set_codice_fiscale(self, codice_fiscale): self.__codice_fiscale = codice_fiscale
 
-    def get_codice_fiscale(self): return self._Cliente__codice_fiscale
-    def set_codice_fiscale(self, codice_fiscale): self._Cliente__codice_fiscale = codice_fiscale
+    def get_nome(self): return self.__nome
+    def set_nome(self, nome): self._nome = nome
 
-    def get_nome(self): return self._Cliente__nome
-    def set_nome(self, nome): self._Cliente__nome = nome
+    def get_eta(self): return self.__eta
+    def set_eta(self, eta): self.__eta = eta
 
-    def get_eta(self): return self._Cliente__eta
-    def set_eta(self, eta): self._Cliente__eta = eta
+    def get_prezzo_mensile(self): return self.__prezzo_mensile * 12
+    def set_prezzo_mensile(self, prezzo): self.__prezzo_mensile = prezzo
 
-    def get_prezzo_mensile(self): return self._Cliente__prezzo_mensile * 12
-    def set_prezzo_mensile(self, prezzo): self._Cliente__prezzo_mensile = prezzo
+    def get_password(self): return self.__password
+    def set_password(self, password): self.__password = password
 
-    def get_password(self): return self._Cliente__password
-    def set_password(self, password): self._Cliente__password = password
-
-    def get_corso(self): return self._Cliente__corso
-    def set_corso(self, corso): self._Cliente__corso = corso
+    def get_corso(self): return self.__corso
+    def set_corso(self, corso): self.__corso = corso
 
 
-class ClientePlus(ClienteStandard):
+class ClientePlus(Cliente):
+    
+    def __init__(self, codice_fiscale, nome, eta, prezzo_mensile, password, corso):
+        super().__init__(codice_fiscale, nome, eta, prezzo_mensile, password, corso)
+        
+        self.__tessera = Tessera(nome, datetime.today().strftime("%d/%m/%Y"))
+
+    def get_tessera(self): return self.__tessera
+    def set_tessera(self, tessera): self.__tessera = tessera
+
+    def get_codice_fiscale(self): return self.__codice_fiscale
+    def set_codice_fiscale(self, codice_fiscale): self.__codice_fiscale = codice_fiscale
+
+    def get_nome(self): return self.__nome
+    def set_nome(self, nome): self.__nome = nome
+
+    def get_eta(self): return self.__eta
+    def set_eta(self, eta): self.__eta = eta
+
+    def get_prezzo_mensile(self): return self.__prezzo_mensile * 12
+    def set_prezzo_mensile(self, prezzo): self.__prezzo_mensile = prezzo
+
+    def get_password(self): return self.__password
+    def set_password(self, password): self.__password = password
+
+    def get_corso(self): return self.__corso
+    def set_corso(self, corso): self.__corso = corso
+
+    
     def get_prezzo_mensile(self):
-        annuale = self._Cliente__prezzo_mensile * 12
+        annuale = self.__prezzo_mensile * 12
         return annuale * 0.7  # 30% sconto
 
 
