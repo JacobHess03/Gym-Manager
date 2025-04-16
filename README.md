@@ -23,26 +23,26 @@ Un sistema di gestione per clienti di una palestra, scritto in Python con un app
 
 ## 🧠 Classi Principali
 
-  Cliente (astratta)
+  - **Cliente (astratta)**
 
-  ClienteStandard
+  - **ClienteStandard**
 
-  ClientePlus (30% sconto annuale)
+  - **ClientePlus (30% sconto annuale)**
 
-  Tessera
+  - **Tessera**
 
-  Admin
+  - **Admin**
 
 ## 🎯 Come usare il programma
-Requisiti
+**Requisiti**
 
-  Python 3.10 o superiore
+- Python 3.10 o superiore
 
-Esecuzione
+- Esecuzione
 
-python main.py
+- python main.py
 
-Modalità disponibili
+**Modalità disponibili**
 
   Admin: può registrare/modificare clienti, visualizzare tutti i dati, vedere gli sconti mensili.
 
@@ -59,18 +59,13 @@ Modalità disponibili
 Ogni cliente riceve una tessera annuale alla registrazione. La tessera scade dopo 365 giorni dalla data di attivazione. Il sistema verifica automaticamente la validità della tessera al login.
 ## 💸 Sconti stagionali
 
-Gli sconti variano in base al corso e al mese corrente. Esempio:
-
-Corso | Mesi con Sconto | Prezzo scontato
-Yoga | Apr, Mag, Giu | €35
-Pilates | Gen, Feb, Mar | €35
-Gym | Lug, Ago, Set | €35
-Karate | Ott, Nov, Dic | €40
+Gli sconti variano in base al corso e al mese corrente. 
 
 
 # ✨ Esempio d’uso
 
-Seleziona la tua opzione 
+Seleziona la tua opzione:
+```
 1. ADMIN
 2. UTENTE
 0. Esci
@@ -83,6 +78,6 @@ Seleziona la tua opzione
 4. Visualizza Tutti i Clienti
 5. Visualizza sconti del mese per i clienti
 0. Esci
-
+```
 
 
