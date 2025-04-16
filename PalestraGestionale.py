@@ -1,11 +1,10 @@
-# Importazione delle librerie necessarie
-from abc import ABC, abstractmethod  # Per definire classi astratte
-from datetime import datetime, timedelta  # Per gestire date e calcoli temporali
+from abc import ABC, abstractmethod
+from datetime import datetime, timedelta
 
-# Classe astratta Cliente, rappresenta un cliente generico
+# Classe astratta Cliente
 class Cliente(ABC):
-    def __init__(self, codice_fiscale, nome, eta, prezzo_mensile, password, corso, tessera):
-        # Attributi privati del cliente
+    def __init__(self, codice_fiscale, nome, eta, prezzo_mensile, password, corso, tessera=None):
+        # Attributi privati con _Cliente__ oppure privati
         self.__codice_fiscale = codice_fiscale
         self.__nome = nome
         self.__eta = eta
@@ -14,7 +13,7 @@ class Cliente(ABC):
         self.__corso = corso
         self.__tessera = tessera
 
-    # Metodi astratti per ottenere e impostare gli attributi
+    # Metodi astratti per accesso e modifica degli attributi
     @abstractmethod
     def get_codice_fiscale(self): pass
     @abstractmethod
@@ -43,63 +42,52 @@ class Cliente(ABC):
     def get_tessera(self): pass
     @abstractmethod
     def set_tessera(self, tessera): pass
+    @abstractmethod
+    def get_scadenza(self): pass
+    @abstractmethod
+    def set_scadenza(self, scadenza): pass
 
-# Classe ClienteStandard, implementa Cliente per clienti standard
+# ClienteStandard eredita da Cliente e implementa i metodi
 class ClienteStandard(Cliente):
     def __init__(self, codice_fiscale, nome, eta, prezzo_mensile, password, corso):
         super().__init__(codice_fiscale, nome, eta, prezzo_mensile, password, corso)
-        # Creazione automatica di una tessera associata al cliente
+        self.__scadenza = ""
         self.__tessera = Tessera(nome, datetime.today().strftime("%d/%m/%Y"))
 
-    # Implementazione dei metodi astratti
+    # Getter/setter per tessera e scadenza
     def get_tessera(self): return self.__tessera
     def set_tessera(self, tessera): self.__tessera = tessera
-    def get_codice_fiscale(self): return self.__codice_fiscale
-    def set_codice_fiscale(self, codice_fiscale): self.__codice_fiscale = codice_fiscale
-    def get_nome(self): return self.__nome
-    def set_nome(self, nome): self._nome = nome
-    def get_eta(self): return self.__eta
-    def set_eta(self, eta): self.__eta = eta
-    def get_prezzo_mensile(self): return self.__prezzo_mensile * 12  # Prezzo annuale
-    def set_prezzo_mensile(self, prezzo): self.__prezzo_mensile = prezzo
-    def get_password(self): return self.__password
-    def set_password(self, password): self.__password = password
-    def get_corso(self): return self.__corso
-    def set_corso(self, corso): self.__corso = corso
+    def get_scadenza(self): return self.__scadenza
+    def set_scadenza(self, scadenza): self.__scadenza = scadenza
 
-# Classe ClientePlus, implementa Cliente per clienti premium con sconto
-class ClientePlus(Cliente):
-    def __init__(self, codice_fiscale, nome, eta, prezzo_mensile, password, corso):
-        super().__init__(codice_fiscale, nome, eta, prezzo_mensile, password, corso)
-        self.__tessera = Tessera(nome, datetime.today().strftime("%d/%m/%Y"))
+    # Implementazione metodi astratti della superclasse
+    def get_codice_fiscale(self): return self._Cliente__codice_fiscale
+    def set_codice_fiscale(self, codice_fiscale): self._Cliente__codice_fiscale = codice_fiscale
+    def get_nome(self): return self._Cliente__nome
+    def set_nome(self, nome): self._Cliente__nome = nome
+    def get_eta(self): return self._Cliente__eta
+    def set_eta(self, eta): self._Cliente__eta = eta
+    def get_prezzo_mensile(self): return self._Cliente__prezzo_mensile * 12  # Calcolo annuale
+    def set_prezzo_mensile(self, prezzo): self._Cliente__prezzo_mensile = prezzo
+    def get_password(self): return self._Cliente__password
+    def set_password(self, password): self._Cliente__password = password
+    def get_corso(self): return self._Cliente__corso
+    def set_corso(self, corso): self._Cliente__corso = corso
 
-    # Implementazione dei metodi astratti
-    def get_tessera(self): return self.__tessera
-    def set_tessera(self, tessera): self.__tessera = tessera
-    def get_codice_fiscale(self): return self.__codice_fiscale
-    def set_codice_fiscale(self, codice_fiscale): self.__codice_fiscale = codice_fiscale
-    def get_nome(self): return self.__nome
-    def set_nome(self, nome): self.__nome = nome
-    def get_eta(self): return self.__eta
-    def set_eta(self, eta): self.__eta = eta
+# ClientePlus eredita da ClienteStandard e applica uno sconto
+class ClientePlus(ClienteStandard):
     def get_prezzo_mensile(self):
-        # Prezzo annuale con sconto del 30%
-        annuale = self.__prezzo_mensile * 12
-        return annuale * 0.7
-    def set_prezzo_mensile(self, prezzo): self.__prezzo_mensile = prezzo
-    def get_password(self): return self.__password
-    def set_password(self, password): self.__password = password
-    def get_corso(self): return self.__corso
-    def set_corso(self, corso): self.__corso = corso
+        annuale = self._Cliente__prezzo_mensile * 12
+        return annuale * 0.7  # 30% di sconto sul totale
 
-# Classe Tessera, rappresenta una tessera associata a un cliente
+# Classe Tessera con metodi per gestirne lo stato
 class Tessera:
     def __init__(self, cliente, data, attiva=True):
         self.__cliente = cliente
         self.__data = data
         self.__attiva = attiva
 
-    # Metodo per verificare lo stato della tessera
+    # Controllo validità della tessera (1 anno di validità)
     def attivazione(self, data_attuale_str):
         data_attivazione = datetime.strptime(self.__data, "%d/%m/%Y")
         data_attuale = datetime.strptime(data_attuale_str, "%d/%m/%Y")
@@ -111,9 +99,10 @@ class Tessera:
         else:
             self.__attiva = True
             print(f"La tessera di {self.__cliente} è ATTIVA. Scadrà il {data_scadenza.strftime('%d/%m/%Y')}.")
+
         return self.__attiva
 
-    # Getter e setter per gli attributi della tessera
+    # Getter e setter
     def is_attiva(self): return self.__attiva
     def set_attiva(self, attiva): self.__attiva = attiva
     def get_data(self): return self.__data
@@ -121,22 +110,21 @@ class Tessera:
     def get_cliente(self): return self.__cliente
     def set_cliente(self, cliente): self.__cliente = cliente
 
-# Classe Admin, gestisce i clienti e le loro tessere
+# Classe Admin per gestire i clienti
 class Admin:
     def __init__(self):
-        self.clienti = []  # Lista dei clienti registrati
+        self.clienti = []
 
-    # Metodo per aggiungere un cliente
     def aggiungi_cliente(self, cliente: Cliente):
         self.clienti.append(cliente)
         print("Cliente aggiunto correttamente.")
 
-    # Metodo per calcolare e mostrare gli sconti mensili
+    # Visualizza eventuali sconti in base al corso e mese
     def sconti_clienti(self):
-        mese_corrente = datetime.now().strftime("%b")  # Mese corrente
+        mese_corrente = datetime.now().strftime("%b")
         print(f"\nMese corrente: {mese_corrente}")
 
-        # Prezzi scontati per corso e mese
+        # Mappa dei mesi con sconti per corso
         prezzi_scontati = {
             "Pilates": {"Gen": 35, "Feb": 35, "Mar": 35},
             "Yoga": {"Apr": 35, "Mag": 35, "Giu": 35},
@@ -146,7 +134,7 @@ class Admin:
 
         for cliente in self.clienti:
             corso = cliente.get_corso()
-            prezzo_base = cliente.get_prezzo_mensile() / 12  # Prezzo mensile stimato
+            prezzo_base = cliente.get_prezzo_mensile() / 12
 
             if corso in prezzi_scontati and mese_corrente in prezzi_scontati[corso]:
                 prezzo_scontato = prezzi_scontati[corso][mese_corrente]
@@ -157,7 +145,7 @@ class Admin:
                 print(f"\nCliente: {cliente.get_nome()} ({corso})")
                 print(f"Nessuno sconto per il mese di {mese_corrente}. Prezzo: €{prezzo_base:.2f}")
 
-    # Metodo per verificare lo stato della tessera di un cliente
+    # Verifica stato tessera
     def verifica_tessera(self, cliente_cf):
         for cliente in self.clienti:
             if cliente.get_codice_fiscale() == cliente_cf:
@@ -165,7 +153,7 @@ class Admin:
                 return tessera.attivazione(datetime.today().strftime("%d/%m/%Y"))
         return False
 
-    # Metodo per modificare i dati di un cliente
+    # Modifica dati cliente
     def modifica_cliente(self):
         codice = input("Codice fiscale del cliente da modificare: ")
         for cliente in self.clienti:
@@ -189,22 +177,20 @@ class Admin:
                     case "7":
                         tessera_attiva = self.verifica_tessera(codice)
                         if tessera_attiva:
-                            scelta = input("La tessera è attiva. Vuoi disattivarla? (s/n): ")
+                            scelta = input("Tessera attiva. Disattivarla? (s/n): ")
                             if scelta.lower() == "s":
                                 cliente.get_tessera().set_attiva(False)
-                                print("Tessera disattivata.")
                         else:
-                            scelta = input("La tessera è disattiva. Vuoi attivarla manualmente? (s/n): ")
+                            scelta = input("Tessera inattiva. Attivarla manualmente? (s/n): ")
                             if scelta.lower() == "s":
                                 cliente.get_tessera().set_attiva(True)
-                                print("Tessera attivata.")
                     case _:
                         print("Scelta non valida.")
                 print("Modifica completata.")
                 return
         print("Cliente non trovato.")
 
-    # Metodo per stampare i dettagli di tutti i clienti
+    # Stampa elenco clienti registrati
     def stampa_clienti(self):
         if not self.clienti:
             print("Nessun cliente registrato.")
@@ -221,7 +207,7 @@ class Admin:
             print(f"Tessera attiva: {cliente.get_tessera().is_attiva()}")
             print("-" * 30)
 
-# Decoratore per validare input di codice fiscale e password
+# Decoratore per validare input codice fiscale e password
 def verifica_input(funzione):
     def wrapper(admin):
         while True:
@@ -235,13 +221,12 @@ def verifica_input(funzione):
                 print(" Password troppo corta. Deve contenere almeno 9 caratteri.")
                 continue
 
-            # Passaggio ai parametri della funzione
             return funzione(admin, codice, password)
     return wrapper
 
-# Funzione per registrare un nuovo cliente
+# Registrazione nuovo cliente
 @verifica_input
-def registrazione(admin, codice, password):
+def registrazione(admin,codice,password):
     nome = input("Nome: ")
     eta = int(input("Età: "))
     prezzo = float(input("Prezzo mensile: "))
@@ -255,9 +240,9 @@ def registrazione(admin, codice, password):
 
     admin.aggiungi_cliente(cliente)
 
-# Funzione per il login di un cliente
+# Login cliente esistente
 @verifica_input
-def login(admin, codice, password):
+def login(admin,codice,password):
     for cliente in admin.clienti:
         if cliente.get_codice_fiscale() == codice and cliente.get_password() == password:
             if admin.verifica_tessera(codice):
@@ -328,9 +313,9 @@ def menu_cliente(admin):
             case _:
                 print("Scelta non valida.")
 
-# Funzione principale dell'applicazione
+# Funzione principale
 def app():
-    admin = Admin()  # Creazione dell'oggetto Admin
+    admin = Admin()
     while True:
         scelta = int(input("Seleziona la tua opzione \n1. ADMIN\n2. UTENTE\n0. Esci\n> "))
 
@@ -345,5 +330,5 @@ def app():
             case _:
                 print("Scelta non valida.")
 
-# Avvio dell'applicazione
+# Avvio del programma
 app()
