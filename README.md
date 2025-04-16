@@ -59,8 +59,14 @@ Un sistema di gestione per clienti di una palestra, scritto in Python con un app
 Ogni cliente riceve una tessera annuale alla registrazione. La tessera scade dopo 365 giorni dalla data di attivazione. Il sistema verifica automaticamente la validità della tessera al login.
 ## 💸 Sconti stagionali
 
-Gli sconti variano in base al corso e al mese corrente. 
-
+Gli sconti variano in base al corso e al mese corrente.
+```
+Corso | Mesi con Sconto | Prezzo scontato
+Yoga | Apr, Mag, Giu | €35
+Pilates | Gen, Feb, Mar | €35
+Gym | Lug, Ago, Set | €35
+Karate | Ott, Nov, Dic | €40
+```
 
 # ✨ Esempio d’uso
 
