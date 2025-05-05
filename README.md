@@ -1,8 +1,8 @@
-# 💪 GymManager
+# GymManager
 
 Un sistema di gestione per clienti di una palestra, scritto in Python con un approccio orientato agli oggetti. Il programma gestisce registrazione, login, tessere annuali, corsi, sconti stagionali e la distinzione tra clienti standard e clienti plus.
 
-## 🚀 Funzionalità principali
+## Funzionalità principali
 
 - **Registrazione clienti (Standard/Plus)** con controllo di input
 - **Login clienti** con verifica tessera
@@ -12,16 +12,16 @@ Un sistema di gestione per clienti di una palestra, scritto in Python con un app
 - **Visualizzazione e modifica dati clienti**
 - **Interfaccia admin separata dall'interfaccia cliente**
 
-## 📦 Struttura del Progetto
+## Struttura del Progetto
 
 ```text
 ├── main.py              # Avvio dell'app con menu Admin/Utente
 ├── README.md            # Questo file
 ```
 
-  ✅ Il progetto è contenuto in un singolo file Python per semplicità, ma è strutturato per poter essere facilmente modulare.
+  Il progetto è contenuto in un singolo file Python per semplicità, ma è strutturato per poter essere facilmente modulare.
 
-## 🧠 Classi Principali
+## Classi Principali
 
   - **Cliente (astratta)**
 
@@ -33,7 +33,7 @@ Un sistema di gestione per clienti di una palestra, scritto in Python con un app
 
   - **Admin**
 
-## 🎯 Come usare il programma
+## Come usare il programma
 **Requisiti**
 
 - Python 3.10 o superiore
@@ -48,16 +48,16 @@ Un sistema di gestione per clienti di una palestra, scritto in Python con un app
 
   Utente: può registrarsi, effettuare login, verificare lo stato della propria tessera, consultare gli sconti del mese.
 
-## 🔐 Sicurezza
+## Sicurezza
 
   Il codice fiscale deve essere lungo 16 caratteri
 
   La password deve essere di almeno 9 caratteri
 
-## 📆 Sistema Tessera
+## Sistema Tessera
 
 Ogni cliente riceve una tessera annuale alla registrazione. La tessera scade dopo 365 giorni dalla data di attivazione. Il sistema verifica automaticamente la validità della tessera al login.
-## 💸 Sconti stagionali
+## Sconti stagionali
 
 Gli sconti variano in base al **corso** e al **mese corrente**. Ecco un **esempio**:
 ```
@@ -68,7 +68,7 @@ Gym | Lug, Ago, Set | €35
 Karate | Ott, Nov, Dic | €40
 ```
 
-# ✨ Esempio d’uso
+# Esempio d’uso
 
 Seleziona la tua opzione:
 ```
@@ -85,5 +85,5 @@ Seleziona la tua opzione:
 5. Visualizza sconti del mese per i clienti
 0. Esci
 ```
-
+*Autore: Giacomo Visciotti-Giuseppe Del Vecchio*
 
