@@ -1,89 +1,79 @@
-# GymManager
+GymManager
 
-Un sistema di gestione per clienti di una palestra, scritto in Python con un approccio orientato agli oggetti. Il programma gestisce registrazione, login, tessere annuali, corsi, sconti stagionali e la distinzione tra clienti standard e clienti plus.
+This repository hosts a gym client management system written in Python, built with an object-oriented approach. The program handles client registration and login, manages annual memberships, course enrollment, seasonal discounts, and differentiates between standard and premium (plus) clients.
+Key Features
 
-## Funzionalità principali
+    Client Registration (Standard/Plus) with input validation.
+    Client Login with membership verification.
+    Course Management (Yoga, Gym, Pilates, Karate).
+    Monthly Discounts based on course type.
+    Annual Membership System with expiration dates and active/inactive status.
+    View and Modify Client Data.
+    Separate Admin Interface from the client interface.
 
-- **Registrazione clienti (Standard/Plus)** con controllo di input
-- **Login clienti** con verifica tessera
-- **Gestione corsi** (Yoga, Gym, Pilates, Karate)
-- **Sconti mensili** in base al tipo di corso
-- **Sistema tessera annuale** con scadenza e stato attivo/disattivo
-- **Visualizzazione e modifica dati clienti**
-- **Interfaccia admin separata dall'interfaccia cliente**
+Project Structure
+    Plaintext
+    
+    ├── main.py               # Application entry point with Admin/User menu
+    └── README.md             # This file
 
-## Struttura del Progetto
+For simplicity, the project is contained within a single Python file, but it's structured to allow for easy modularization.
+Main Classes
 
-```text
-├── main.py              # Avvio dell'app con menu Admin/Utente
-├── README.md            # Questo file
-```
+    Cliente (abstract)
+    ClienteStandard
+    ClientePlus (30% annual discount)
+    Tessera (Membership Card)
+    Admin
 
-  Il progetto è contenuto in un singolo file Python per semplicità, ma è strutturato per poter essere facilmente modulare.
+How to Use the Program
+Requirements
 
-## Classi Principali
+    Python 3.10 or higher
 
-  - **Cliente (astratta)**
+Execution
+Bash
 
-  - **ClienteStandard**
+    python main.py
 
-  - **ClientePlus (30% sconto annuale)**
+Available Modes
 
-  - **Tessera**
+    Admin: Can register/modify clients, view all client data, and see monthly discounts.
+    User: Can register, log in, check their membership status, and view the month's discounts.
 
-  - **Admin**
+Security
 
-## Come usare il programma
-**Requisiti**
+    The tax code (Codice Fiscale) must be 16 characters long.
+    Passwords must be at least 9 characters long.
 
-- Python 3.10 o superiore
+Membership System
 
-- Esecuzione
+Each client receives an annual membership upon registration. The membership expires 365 days from the activation date. The system automatically verifies membership validity upon login.
+Seasonal Discounts
 
-- python main.py
+Discounts vary based on the course and the current month. Here's an example:
 
-**Modalità disponibili**
+    Course  | Months with Discount | Discounted Price
+    Yoga    | Apr, May, Jun        | €35
+    Pilates | Jan, Feb, Mar        | €35
+    Gym     | Jul, Aug, Sep        | €35
+    Karate  | Oct, Nov, Dec        | €40
 
-  Admin: può registrare/modificare clienti, visualizzare tutti i dati, vedere gli sconti mensili.
+Usage Example
 
-  Utente: può registrarsi, effettuare login, verificare lo stato della propria tessera, consultare gli sconti del mese.
+Select your option:
+    
+    1. ADMIN
+    2. USER
+    0. Exit
+    > 1
 
-## Sicurezza
+    --- Admin Menu ---
+    1. Add Client
+    2. Modify Client
+    3. Verify Client Membership
+    4. View All Clients
+    5. View monthly discounts for clients
+    0. Exit
 
-  Il codice fiscale deve essere lungo 16 caratteri
-
-  La password deve essere di almeno 9 caratteri
-
-## Sistema Tessera
-
-Ogni cliente riceve una tessera annuale alla registrazione. La tessera scade dopo 365 giorni dalla data di attivazione. Il sistema verifica automaticamente la validità della tessera al login.
-## Sconti stagionali
-
-Gli sconti variano in base al **corso** e al **mese corrente**. Ecco un **esempio**:
-```
-Corso | Mesi con Sconto | Prezzo scontato
-Yoga | Apr, Mag, Giu | €35
-Pilates | Gen, Feb, Mar | €35
-Gym | Lug, Ago, Set | €35
-Karate | Ott, Nov, Dic | €40
-```
-
-# Esempio d’uso
-
-Seleziona la tua opzione:
-```
-1. ADMIN
-2. UTENTE
-0. Esci
-> 1
-
---- Menu Admin ---
-1. Aggiungi Cliente
-2. Modifica Cliente
-3. Verifica Tessera Cliente
-4. Visualizza Tutti i Clienti
-5. Visualizza sconti del mese per i clienti
-0. Esci
-```
-*Autore: Giacomo Visciotti-Giuseppe Del Vecchio*
-
+Authors: Giacomo Visciotti, Giuseppe Del Vecchio
